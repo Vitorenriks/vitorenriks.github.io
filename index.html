@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Vitor Henriques — Python Developer</title>
 <link rel="icon" href="https://ui-avatars.com/api/?name=VH&background=e94560&color=fff&font-size=0.5&bold=true" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -19,9 +19,9 @@
   --card: rgba(255,255,255,0.03);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
@@ -30,11 +30,9 @@ body {
   font-size: 15px;
   line-height: 1.7;
   overflow-x: hidden;
-  width: 100%;
   cursor: none;
 }
 
-/* Cursor customizado - Desativado no Mobile via Media Query abaixo */
 .cursor {
   width: 8px; height: 8px;
   background: var(--accent);
@@ -72,7 +70,6 @@ nav {
   display: flex; justify-content: space-between; align-items: center;
   background: rgba(8,11,16,0.85);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -97,6 +94,9 @@ nav {
   border-radius: 4px;
   margin-right: 10px;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
   transition: transform 0.3s ease;
 }
 
@@ -111,6 +111,7 @@ nav {
   text-transform: uppercase;
   transition: color 0.2s;
 }
+.nav-links a:hover { color: var(--text); }
 
 #hero {
   min-height: 100vh;
@@ -129,7 +130,15 @@ nav {
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
 }
 
-.hero-content { position: relative; z-index: 2; max-width: 800px; width: 100%; }
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(233,69,96,0.08) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
 
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px;
@@ -145,17 +154,28 @@ nav {
   opacity: 0;
   animation: fadeUp 0.6s ease 0.2s forwards;
 }
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
 
 h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(40px, 8vw, 88px);
+  font-size: clamp(48px, 7vw, 88px);
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -3px;
   margin-bottom: 24px;
   opacity: 0;
   animation: fadeUp 0.6s ease 0.4s forwards;
-  word-wrap: break-word;
 }
 h1 .line2 { color: var(--accent); display: block; }
 
@@ -175,8 +195,10 @@ h1 .line2 { color: var(--accent); display: block; }
   animation: fadeUp 0.6s ease 0.8s forwards;
 }
 
-.btn-primary, .btn-ghost {
+.btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent);
+  color: white;
   padding: 14px 28px;
   border-radius: 6px;
   text-decoration: none;
@@ -187,64 +209,279 @@ h1 .line2 { color: var(--accent); display: block; }
   text-transform: uppercase;
   transition: all 0.2s;
 }
-.btn-primary { background: var(--accent); color: white; }
-.btn-ghost { border: 1px solid var(--border); color: var(--text); }
+.btn-primary:hover { background: #c73352; transform: translateY(-2px); }
 
-section { padding: 100px 60px; position: relative; width: 100%; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 60px;
+  display: flex; align-items: center; gap: 12px;
+  color: var(--muted); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 1.2s forwards;
+}
+.scroll-line {
+  width: 40px; height: 1px;
+  background: var(--muted);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: var(--accent);
+  animation: scrollLine 2s ease infinite;
+}
+@keyframes scrollLine {
+  to { left: 200%; }
+}
+
+section { padding: 100px 60px; position: relative; }
 
 .section-label {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1; max-width: 60px;
+  height: 1px; background: var(--accent);
 }
 
 h2 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(32px, 5vw, 52px);
+  font-size: clamp(32px, 4vw, 52px);
   font-weight: 800;
   letter-spacing: -2px;
   margin-bottom: 60px;
   line-height: 1.1;
 }
 
-/* AJUSTE DE QUEBRA DE LINHA NO FINAL */
+#about {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-text p {
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.about-text p strong { color: var(--text); }
+
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.stat-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: rgba(233,69,96,0.3); }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+#stack { background: var(--bg); }
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+}
+.stack-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px 16px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: default;
+}
+.stack-item:hover {
+  border-color: rgba(233,69,96,0.3);
+  background: rgba(233,69,96,0.04);
+  transform: translateY(-4px);
+}
+.stack-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.stack-name { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+#projects { background: var(--bg2); border-top: 1px solid var(--border); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+}
+.project-card:hover {
+  border-color: rgba(233,69,96,0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+
+.project-header {
+  padding: 28px 28px 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.project-badge {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(0,212,170,0.1);
+  border: 1px solid rgba(0,212,170,0.2);
+  color: var(--accent2);
+}
+.project-badge.academic {
+  background: rgba(233,69,96,0.1);
+  border-color: rgba(233,69,96,0.2);
+  color: var(--accent);
+}
+
+.project-links { display: flex; gap: 8px; }
+.project-link {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.project-link:hover { border-color: var(--accent); color: var(--accent); }
+
+.project-body { padding: 24px 28px 28px; }
+
+.project-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+.project-desc {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.project-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+#journey { background: var(--bg); }
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -44px; top: 6px;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(233,69,96,0.2);
+}
+.timeline-year {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.timeline-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 6px; letter-spacing: -0.5px;
+}
+.timeline-sub { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.timeline-desc { font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 600px; }
+
+#contact {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+#contact h2 { margin-bottom: 20px; }
 .contact-sub {
   color: var(--muted); font-size: 15px;
-  margin-bottom: 48px; max-width: 600px; 
-  margin-left: auto; margin-right: auto;
-  white-space: normal;
+  margin-bottom: 48px; max-width: 480px; margin-left: auto; margin-right: auto;
 }
-.contact-sub span.nowrap { white-space: nowrap; }
+.contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-/* MEDIA QUERIES PARA RENDERIZAÇÃO ANDROID / IOS */
-@media (max-width: 768px) {
-  body { cursor: auto; }
-  .cursor, .cursor-ring { display: none !important; }
-
-  nav {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .nav-logo { font-size: 16px; }
-  .nav-links { 
-    display: flex; 
-    gap: 15px; 
-    width: 100%; 
-    justify-content: center; 
-  }
-  .nav-links a { font-size: 9px; letter-spacing: 1px; }
-
-  #hero { padding: 140px 20px 60px; text-align: center; }
-  h1 { font-size: 48px; letter-spacing: -1.5px; line-height: 1.1; }
-  .hero-desc { font-size: 14px; margin: 0 auto 32px; }
-  .hero-ctas { justify-content: center; }
-  .btn-primary, .btn-ghost { width: 100%; justify-content: center; padding: 12px; }
-
-  section { padding: 60px 20px; }
-  .about-grid { grid-template-columns: 1fr; gap: 40px; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  footer { flex-direction: column; gap: 10px; text-align: center; }
+footer {
+  padding: 32px 60px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--muted); font-size: 12px;
 }
 
 @keyframes fadeUp {
@@ -252,28 +489,25 @@ h2 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.reveal { opacity: 0; transform: translateY(32px); transition: all 0.6s ease; }
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: all 0.6s ease;
+}
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-#about { background: var(--bg2); border-top: 1px solid var(--border); }
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-.stat-card { background: var(--bg3); border: 1px solid var(--border); padding: 20px; }
-.stat-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); }
-
-.stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
-.stack-item { background: var(--card); border: 1px solid var(--border); padding: 15px; text-align: center; border-radius: 8px; }
-
-.projects-grid { display: grid; gap: 20px; }
-.project-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 25px; position: relative; }
-.project-badge { font-size: 10px; padding: 4px 10px; border-radius: 100px; background: rgba(0,212,170,0.1); color: var(--accent2); text-transform: uppercase; }
-
-.timeline { position: relative; padding-left: 30px; border-left: 1px solid var(--border); }
-.timeline-item { margin-bottom: 40px; opacity: 0; transition: 0.5s; }
-.timeline-item.visible { opacity: 1; }
-.timeline-year { color: var(--accent); font-size: 11px; font-weight: bold; }
-
-#contact { background: var(--bg2); text-align: center; }
-.contact-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  #hero, section { padding: 80px 24px 60px; }
+  h1 { letter-spacing: -2px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+  .hero-scroll { left: 24px; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
 </style>
 </head>
 <body>
@@ -294,6 +528,7 @@ h2 {
 
 <section id="hero">
   <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
   <div class="hero-content">
     <div class="hero-tag">Disponível para oportunidades</div>
     <h1>Vitor<br><span class="line2">Henriques</span></h1>
@@ -306,6 +541,10 @@ h2 {
       <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" class="btn-ghost">LinkedIn ↗</a>
     </div>
   </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
 </section>
 
 <section id="about">
@@ -313,9 +552,15 @@ h2 {
   <div class="about-grid">
     <div class="about-text reveal">
       <h2>Dev com visão de negócio<br>e operacional.</h2>
-      <p>Minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Em Agosto de 2020 na Belmonte Distribuidora, atuei na ponta técnica gerenciando infraestrutura, backups e servidores, garantindo que a operação nunca parasse.</p>
-      <p>Fui o elo entre a dor do usuário e os times de dev da <strong>Target Sistemas e Sisbev</strong>. Aprendi que um bug ou uma rede instável não é apenas um erro técnico, mas um caminhão parado ou uma venda perdida. Essa experiência me ensinou o que cursos não ensinam: <strong>como a tecnologia serve ao lucro do negócio</strong>.</p>
-      <p>Sou formado em <strong>ADS pela Uninter (2021)</strong> e certificado pelo <strong>CS50x Harvard</strong>. Hoje, aplico essa bagagem de "campo" e fundamento acadêmico no meu MicroSaaS <strong>CM Manager Pro</strong>, construindo sistemas focados em resiliência, segurança e usabilidade real.</p>
+      <p>
+        Minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Em Agosto de 2020 na Belmonte Distribuidora, atuei na ponta técnica gerenciando infraestrutura, backups e servidores, garantindo que a operação nunca parasse.
+      </p>
+      <p>
+        Fui o elo entre a dor do usuário e os times de dev da <strong>Target Sistemas e Sisbev</strong>. Aprendi que um bug ou uma rede instável não é apenas um erro técnico, mas um caminhão parado ou uma venda perdida. Essa experiência me ensinou o que cursos não ensinam: <strong>como a tecnologia serve ao lucro do negócio</strong>.
+      </p>
+      <p>
+        Sou formado em <strong>ADS pela Uninter (2021)</strong> e certificado pelo <strong>CS50x Harvard</strong>. Hoje, aplico essa bagagem de "campo" e fundamento acadêmico no meu MicroSaaS <strong>CM Manager Pro</strong>, construindo sistemas focados em resiliência, segurança e usabilidade real.
+      </p>
     </div>
     <div class="about-stats reveal">
       <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Projetos em produção</div></div>
@@ -330,12 +575,16 @@ h2 {
   <div class="section-label reveal">Tecnologias</div>
   <h2 class="reveal">Minha stack<br>atual.</h2>
   <div class="stack-grid reveal">
-    <div class="stack-item">🐍<div class="stack-name">Python</div></div>
-    <div class="stack-item">🌶️<div class="stack-name">Flask</div></div>
-    <div class="stack-item">🐘<div class="stack-name">PostgreSQL</div></div>
-    <div class="stack-item">🌐<div class="stack-name">HTML5</div></div>
-    <div class="stack-item">🎨<div class="stack-name">CSS3</div></div>
-    <div class="stack-item">🐙<div class="stack-name">GitHub</div></div>
+    <div class="stack-item"><span class="stack-icon">🐍</span><div class="stack-name">Python</div></div>
+    <div class="stack-item"><span class="stack-icon">🌶️</span><div class="stack-name">Flask</div></div>
+    <div class="stack-item"><span class="stack-icon">🐘</span><div class="stack-name">PostgreSQL</div></div>
+    <div class="stack-item"><span class="stack-icon">🔗</span><div class="stack-name">SQLAlchemy</div></div>
+    <div class="stack-item"><span class="stack-icon">🌐</span><div class="stack-name">HTML5</div></div>
+    <div class="stack-item"><span class="stack-icon">🎨</span><div class="stack-name">CSS3</div></div>
+    <div class="stack-item"><span class="stack-icon">⚡</span><div class="stack-name">Bootstrap</div></div>
+    <div class="stack-item"><span class="stack-icon">🔀</span><div class="stack-name">Git</div></div>
+    <div class="stack-item"><span class="stack-icon">🐙</span><div class="stack-name">GitHub</div></div>
+    <div class="stack-item"><span class="stack-icon">☁️</span><div class="stack-name">Render</div></div>
   </div>
 </section>
 
@@ -343,11 +592,42 @@ h2 {
   <div class="section-label reveal">Projetos</div>
   <h2 class="reveal">O que já<br>construí.</h2>
   <div class="projects-grid">
+    <div class="project-card featured reveal">
+      <div class="project-header">
+        <span class="project-badge">Em produção</span>
+        <div class="project-links">
+          <a href="https://cm-manager-pro.onrender.com" target="_blank" class="project-link">↗</a>
+          <a href="https://github.com/Vitorenriks/cm-manager-pro" target="_blank" class="project-link">⌥</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">CM Manager Pro</div>
+        <p class="project-desc">MicroSaaS de gestão de obras para construtoras. Sistema completo com dashboard, CRUD de projetos, autenticação segura e UX mobile-first.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">Flask-Login</span><span class="tag">Bootstrap 5</span>
+        </div>
+      </div>
+    </div>
     <div class="project-card reveal">
-      <span class="project-badge">Em produção</span>
-      <h3>CM Manager Pro</h3>
-      <p>MicroSaaS de gestão de obras para construtoras.</p>
-      <a href="https://cm-manager-pro.onrender.com" target="_blank" style="color:var(--accent); text-decoration:none;">Ver projeto ↗</a>
+      <div class="project-header">
+        <span class="project-badge academic">CS50x · Harvard</span>
+        <div class="project-links">
+          <a href="https://github.com/Vitorenriks/construction-management" target="_blank" class="project-link">⌥</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Construction Management</div>
+        <p class="project-desc">Projeto de conclusão do CS50x Harvard. Sistema de gestão de obras construído com Python, Flask e SQLite.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Jinja2</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" style="border-style: dashed; opacity: 0.4;">
+      <div class="project-body" style="display:flex; align-items:center; justify-content:center; min-height: 200px; flex-direction:column; gap:12px;">
+        <div style="font-size:32px;">+</div>
+        <div style="font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--muted);">Próximo projeto</div>
+      </div>
     </div>
   </div>
 </section>
@@ -358,8 +638,27 @@ h2 {
   <div class="timeline">
     <div class="timeline-item">
       <div class="timeline-year">2026 · Presente</div>
-      <div class="timeline-title">CM Manager Pro — Upgrades</div>
-      <div class="timeline-desc">Evoluindo a stack e otimizando a infraestrutura PostgreSQL.</div>
+      <div class="timeline-title">CM Manager Pro — Upgrades & Performance</div>
+      <div class="timeline-sub">MicroSaaS em Produção</div>
+      <div class="timeline-desc">Evoluindo a stack para Full Stack com Angular e TypeScript, enquanto otimizo a infraestrutura PostgreSQL do CM Manager Pro.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2025</div>
+      <div class="timeline-title">Construction Management & CS50x</div>
+      <div class="timeline-sub">Harvard University / MicroSaaS</div>
+      <div class="timeline-desc">Conclusão do CS50x Harvard e evolução do projeto acadêmico para o primeiro MVP do MicroSaaS.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2021</div>
+      <div class="timeline-title">Análise e Desenvolvimento de Sistemas</div>
+      <div class="timeline-sub">Graduação concluída — Uninter</div>
+      <div class="timeline-desc">Formação focada em fundamentos de sistemas, engenharia de software e desenvolvimento web.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2020 – 2025</div>
+      <div class="timeline-title">Infraestrutura e Interface de Sistemas</div>
+      <div class="timeline-sub">Belmonte Distribuidora</div>
+      <div class="timeline-desc">Gestão de infraestrutura, backups e interface estratégica com times de dev da Target/Sisbev.</div>
     </div>
   </div>
 </section>
@@ -367,10 +666,11 @@ h2 {
 <section id="contact">
   <div class="section-label reveal" style="justify-content:center;">Contato</div>
   <h2 class="reveal">Vamos<br>conversar.</h2>
-  <p class="contact-sub reveal">Aberto a oportunidades como <span class="nowrap">Desenvolvedor Python Júnior</span>. Entre em contato direto.</p>
+  <p class="contact-sub reveal">Aberto a oportunidades como <span style="display: inline-block; white-space: nowrap;">Desenvolvedor Python Júnior</span>. Entre em contato direto.</p>
   <div class="contact-links reveal">
     <a href="mailto:vitor.cunha.henrique@hotmail.com" class="btn-primary">E-mail ↗</a>
     <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    <a href="https://github.com/Vitorenriks" target="_blank" class="btn-ghost">GitHub ↗</a>
   </div>
 </section>
 
@@ -391,19 +691,42 @@ document.addEventListener('mousemove', e => {
 });
 
 function animRing() {
-  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-  ring.style.left = rx - 16 + 'px'; ring.style.top = ry - 16 + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx - 16 + 'px';
+  ring.style.top = ry - 16 + 'px';
   requestAnimationFrame(animRing);
 }
 animRing();
 
+document.querySelectorAll('a, button, .stack-item, .project-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(3)');
+  el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+});
+
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 80);
+    }
   });
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+  });
+});
 </script>
 </body>
 </html>
