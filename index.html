@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Vitor Henriques — Python Developer</title>
+<link rel="icon" href="https://ui-avatars.com/api/?name=VH&background=e94560&color=fff&font-size=0.5&bold=true" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -32,7 +33,6 @@ body {
   cursor: none;
 }
 
-/* Custom cursor */
 .cursor {
   width: 8px; height: 8px;
   background: var(--accent);
@@ -53,7 +53,6 @@ body {
   transition: all 0.08s ease;
 }
 
-/* Noise overlay */
 body::before {
   content: '';
   position: fixed;
@@ -64,7 +63,6 @@ body::before {
   opacity: 0.4;
 }
 
-/* Nav */
 nav {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
@@ -74,6 +72,7 @@ nav {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
+
 .nav-logo {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
@@ -81,7 +80,27 @@ nav {
   color: var(--text);
   text-decoration: none;
   letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
 }
+
+.logo-badge {
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover .logo-badge { transform: rotate(-10deg) scale(1.1); }
 .nav-logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 40px; list-style: none; }
 .nav-links a {
@@ -94,7 +113,6 @@ nav {
 }
 .nav-links a:hover { color: var(--text); }
 
-/* Hero */
 #hero {
   min-height: 100vh;
   display: flex; align-items: center;
@@ -232,7 +250,6 @@ h1 .line2 { color: var(--accent); display: block; }
   to { left: 200%; }
 }
 
-/* Sections */
 section { padding: 100px 60px; position: relative; }
 
 .section-label {
@@ -258,7 +275,6 @@ h2 {
   line-height: 1.1;
 }
 
-/* About */
 #about {
   background: var(--bg2);
   border-top: 1px solid var(--border);
@@ -300,7 +316,6 @@ h2 {
 }
 .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
 
-/* Stack */
 #stack { background: var(--bg); }
 .stack-grid {
   display: grid;
@@ -324,7 +339,6 @@ h2 {
 .stack-icon { font-size: 28px; margin-bottom: 10px; display: block; }
 .stack-name { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
 
-/* Projects */
 #projects { background: var(--bg2); border-top: 1px solid var(--border); }
 
 .projects-grid {
@@ -415,7 +429,6 @@ h2 {
   background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
 
-/* Journey */
 #journey { background: var(--bg); }
 .timeline { position: relative; padding-left: 40px; }
 .timeline::before {
@@ -452,7 +465,6 @@ h2 {
 .timeline-sub { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
 .timeline-desc { font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 600px; }
 
-/* Contact */
 #contact {
   background: var(--bg2);
   border-top: 1px solid var(--border);
@@ -465,7 +477,6 @@ h2 {
 }
 .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-/* Footer */
 footer {
   padding: 32px 60px;
   border-top: 1px solid var(--border);
@@ -473,7 +484,6 @@ footer {
   color: var(--muted); font-size: 12px;
 }
 
-/* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
@@ -485,7 +495,6 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* Mobile */
 @media (max-width: 768px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
@@ -507,7 +516,7 @@ footer {
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="#" class="nav-logo">VH<span>.</span></a>
+  <a href="#" class="nav-logo"><span class="logo-badge">VH</span> Vitor Henriques<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#about">Sobre</a></li>
     <li><a href="#stack">Stack</a></li>
@@ -522,10 +531,7 @@ footer {
   <div class="hero-glow"></div>
   <div class="hero-content">
     <div class="hero-tag">Disponível para oportunidades</div>
-    <h1>
-      Vitor<br>
-      <span class="line2">Henriques</span>
-    </h1>
+    <h1>Vitor<br><span class="line2">Henriques</span></h1>
     <p class="hero-desc">
       Python Developer · Construo sistemas reais que resolvem problemas reais.
       MicroSaaS em produção, CS50x Harvard e uma forte compreensão de como a tecnologia deve servir aos objetivos do negócio.
@@ -545,34 +551,22 @@ footer {
   <div class="section-label">Sobre mim</div>
   <div class="about-grid">
     <div class="about-text reveal">
-  <h2>Dev com visão de negócio<br>e operacional.</h2>
-  <p>
-    Minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Na Belmonte Distribuidora, atuei na ponta técnica gerenciando infraestrutura, backups e servidores, garantindo que a operação nunca parasse.
-  </p>
-  <p>
-    Fui o elo entre a dor do usuário e os times de dev da <strong>Target Sistemas e Sisbev</strong>. Aprendi que um bug ou uma rede instável não é apenas um erro técnico, mas um caminhão parado ou uma venda perdida. Essa experiência me ensinou o que cursos não ensinam: <strong>como a tecnologia serve ao lucro do negócio</strong>.
-  </p>
-  <p>
-    Sou formado em <strong>ADS pela Uninter (2021)</strong> e certificado pelo <strong>CS50x Harvard</strong>. Hoje, aplico essa bagagem de "campo" e fundamento acadêmico no meu MicroSaaS <strong>CM Manager Pro</strong>, construindo sistemas focados em resiliência, segurança e usabilidade real.
-  </p>
-</div>
+      <h2>Dev com visão de negócio<br>e operacional.</h2>
+      <p>
+        Minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Em Agosto de 2020 na Belmonte Distribuidora, atuei na ponta técnica gerenciando infraestrutura, backups e servidores, garantindo que a operação nunca parasse.
+      </p>
+      <p>
+        Fui o elo entre a dor do usuário e os times de dev da <strong>Target Sistemas e Sisbev</strong>. Aprendi que um bug ou uma rede instável não é apenas um erro técnico, mas um caminhão parado ou uma venda perdida. Essa experiência me ensinou o que cursos não ensinam: <strong>como a tecnologia serve ao lucro do negócio</strong>.
+      </p>
+      <p>
+        Sou formado em <strong>ADS pela Uninter (2021)</strong> e certificado pelo <strong>CS50x Harvard</strong>. Hoje, aplico essa bagagem de "campo" e fundamento acadêmico no meu MicroSaaS <strong>CM Manager Pro</strong>, construindo sistemas focados em resiliência, segurança e usabilidade real.
+      </p>
+    </div>
     <div class="about-stats reveal">
-      <div class="stat-card">
-        <div class="stat-num">2+</div>
-        <div class="stat-label">Projetos em produção</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">ADS</div>
-        <div class="stat-label">Uninter (2021)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">5+</div>
-        <div class="stat-label">Anos em tech</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">RJ</div>
-        <div class="stat-label">Volta Redonda · Brasil</div>
-      </div>
+      <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Projetos em produção</div></div>
+      <div class="stat-card"><div class="stat-num">ADS</div><div class="stat-label">Uninter (2021)</div></div>
+      <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Anos em tech</div></div>
+      <div class="stat-card"><div class="stat-num">RJ</div><div class="stat-label">Volta Redonda · Brasil</div></div>
     </div>
   </div>
 </section>
@@ -598,65 +592,43 @@ footer {
   <div class="section-label reveal">Projetos</div>
   <h2 class="reveal">O que já<br>construí.</h2>
   <div class="projects-grid">
-
     <div class="project-card featured reveal">
       <div class="project-header">
         <span class="project-badge">Em produção</span>
         <div class="project-links">
-          <a href="https://cm-manager-pro.onrender.com" target="_blank" class="project-link" title="Ver ao vivo">↗</a>
-          <a href="https://github.com/Vitorenriks/cm-manager-pro" target="_blank" class="project-link" title="GitHub">⌥</a>
+          <a href="https://cm-manager-pro.onrender.com" target="_blank" class="project-link">↗</a>
+          <a href="https://github.com/Vitorenriks/cm-manager-pro" target="_blank" class="project-link">⌥</a>
         </div>
       </div>
       <div class="project-body">
         <div class="project-title">CM Manager Pro</div>
-        <p class="project-desc">
-          MicroSaaS de gestão de obras para construtoras. Sistema completo com dashboard,
-          CRUD de projetos, autenticação segura multiusuário e UX mobile-first.
-          Deploy em produção com PostgreSQL no Render.
-        </p>
+        <p class="project-desc">MicroSaaS de gestão de obras para construtoras. Sistema completo com dashboard, CRUD de projetos, autenticação segura e UX mobile-first.</p>
         <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Flask</span>
-          <span class="tag">PostgreSQL</span>
-          <span class="tag">Flask-Login</span>
-          <span class="tag">PBKDF2</span>
-          <span class="tag">Bootstrap 5</span>
-          <span class="tag">Render</span>
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">Flask-Login</span><span class="tag">Bootstrap 5</span>
         </div>
       </div>
     </div>
-
     <div class="project-card reveal">
       <div class="project-header">
         <span class="project-badge academic">CS50x · Harvard</span>
         <div class="project-links">
-          <a href="https://github.com/Vitorenriks/construction-management" target="_blank" class="project-link" title="GitHub">⌥</a>
+          <a href="https://github.com/Vitorenriks/construction-management" target="_blank" class="project-link">⌥</a>
         </div>
       </div>
       <div class="project-body">
         <div class="project-title">Construction Management</div>
-        <p class="project-desc">
-          Projeto de conclusão do CS50x da Harvard University. Sistema de gestão
-          de obras construído do zero com Python, Flask e SQLite. Base do CM Manager Pro.
-        </p>
+        <p class="project-desc">Projeto de conclusão do CS50x Harvard. Sistema de gestão de obras construído com Python, Flask e SQLite.</p>
         <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Flask</span>
-          <span class="tag">SQLite</span>
-          <span class="tag">Jinja2</span>
-          <span class="tag">HTML/CSS</span>
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Jinja2</span>
         </div>
       </div>
     </div>
-
     <div class="project-card reveal" style="border-style: dashed; opacity: 0.4;">
       <div class="project-body" style="display:flex; align-items:center; justify-content:center; min-height: 200px; flex-direction:column; gap:12px;">
         <div style="font-size:32px;">+</div>
         <div style="font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--muted);">Próximo projeto</div>
-        <div style="font-size:12px; color:var(--muted); text-align:center;">Em desenvolvimento</div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -664,36 +636,29 @@ footer {
   <div class="section-label reveal">Jornada</div>
   <h2 class="reveal">Como cheguei<br>até aqui.</h2>
   <div class="timeline">
-   <div class="timeline-item">
-  <div class="timeline-year">2026 · Presente</div>
-  <div class="timeline-title">CM Manager Pro — Upgrades & Performance</div>
-  <div class="timeline-sub">MicroSaaS em Produção</div>
-  <div class="timeline-desc">
-    Evoluindo a stack para Full Stack com Angular e TypeScript, enquanto otimizo a performance e 
-    infraestrutura PostgreSQL do CM Manager Pro. Aplico essa experiência prática de 
-    produção na busca ativa por minha primeira oportunidade formal como Desenvolvedor.
-  </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2026 · Presente</div>
+      <div class="timeline-title">CM Manager Pro — Upgrades & Performance</div>
+      <div class="timeline-sub">MicroSaaS em Produção</div>
+      <div class="timeline-desc">Evoluindo a stack para Full Stack com Angular e TypeScript, enquanto otimizo a infraestrutura PostgreSQL do CM Manager Pro.</div>
+    </div>
     <div class="timeline-item">
       <div class="timeline-year">2025</div>
       <div class="timeline-title">Construction Management & CS50x</div>
       <div class="timeline-sub">Harvard University / MicroSaaS</div>
-      <div class="timeline-desc">Conclusão do CS50x Harvard: Introduction to Computer Science. Evolução imediata do projeto acadêmico para o primeiro MVP do MicroSaaS de gestão de obras.</div>
+      <div class="timeline-desc">Conclusão do CS50x Harvard e evolução do projeto acadêmico para o primeiro MVP do MicroSaaS.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-year">2021</div>
       <div class="timeline-title">Análise e Desenvolvimento de Sistemas</div>
       <div class="timeline-sub">Graduação concluída — Uninter</div>
-      <div class="timeline-desc">Formação acadêmica focada em fundamentos de sistemas, engenharia de software e desenvolvimento web.</div>
+      <div class="timeline-desc">Formação focada em fundamentos de sistemas, engenharia de software e desenvolvimento web.</div>
     </div>
-<div class="timeline-item">
-  <div class="timeline-year">2020 – 2025</div>
-  <div class="timeline-title">Infraestrutura e Interface de Sistemas</div>
-  <div class="timeline-sub">Belmonte Distribuidora</div>
-  <div class="timeline-desc">
-    Responsável pela infraestrutura local, rotinas de backup e auxilio na administração de servidores. 
-    Atuação estratégica na gestão de tickets e diagnóstico de falhas em APIs junto à Target/Sisbev. 
-    Domínio de suporte remoto avançado e redes, garantindo alta disponibilidade para a força de vendas.
-  </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2020 – 2025</div>
+      <div class="timeline-title">Infraestrutura e Interface de Sistemas</div>
+      <div class="timeline-sub">Belmonte Distribuidora</div>
+      <div class="timeline-desc">Gestão de infraestrutura, backups e interface estratégica com times de dev da Target/Sisbev.</div>
     </div>
   </div>
 </section>
@@ -701,14 +666,10 @@ footer {
 <section id="contact">
   <div class="section-label reveal" style="justify-content:center;">Contato</div>
   <h2 class="reveal">Vamos<br>conversar.</h2>
-  <p class="contact-sub reveal">
-    Aberto a oportunidades como Desenvolvedor Python Júnior.<br>
-    Entre em contato direto ou acompanhe meu trabalho.
-  </p>
+  <p class="contact-sub reveal">Aberto a oportunidades como Desenvolvedor Python Júnior. Entre em contato direto.</p>
   <div class="contact-links reveal">
     <a href="mailto:vitor.cunha.henrique@hotmail.com" class="btn-primary">E-mail ↗</a>
     <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" class="btn-ghost">LinkedIn ↗</a>
-    <a href="https://www.instagram.com/vitorenriksc" target="_blank" class="btn-ghost">Instagram ↗</a>
     <a href="https://github.com/Vitorenriks" target="_blank" class="btn-ghost">GitHub ↗</a>
   </div>
 </section>
@@ -719,7 +680,6 @@ footer {
 </footer>
 
 <script>
-// Custom cursor
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
@@ -744,7 +704,6 @@ document.querySelectorAll('a, button, .stack-item, .project-card').forEach(el =>
   el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
 });
 
-// Scroll reveal
 const observer = new IntersectionObserver(entries => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
@@ -757,7 +716,6 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
 
-// Active nav
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
