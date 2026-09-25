@@ -2,9 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<!-- FIX: viewport-fit=cover for iOS notch/safe-areas -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Vitor Henriques — Python Developer</title>
+<title>Vitor Henriques — Software Developer</title>
 <link rel="icon" href="https://ui-avatars.com/api/?name=VH&background=e94560&color=fff&font-size=0.5&bold=true" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -21,7 +20,6 @@
   --muted:#6b7a92;
   --border:rgba(255,255,255,0.07);
   --card:rgba(255,255,255,0.03);
-  /* safe-area insets for iOS/Android notch */
   --safe-l: env(safe-area-inset-left, 0px);
   --safe-r: env(safe-area-inset-right, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
@@ -33,11 +31,9 @@
    ===================================================== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-/* FIX: overflow-x on html too prevents horizontal scroll artifacts on Android */
 html{
   scroll-behavior:smooth;
   overflow-x:hidden;
-  /* FIX: remove default tap highlight that causes "sombra"/flash on Android */
   -webkit-tap-highlight-color: transparent;
   tap-highlight-color: transparent;
 }
@@ -49,13 +45,10 @@ body{
   font-size:15px;
   line-height:1.7;
   overflow-x:hidden;
-  /* FIX: cursor:none only on non-touch — overridden in mobile MQ */
   cursor:none;
-  /* FIX: smooth momentum scrolling on iOS */
   -webkit-overflow-scrolling:touch;
 }
 
-/* FIX: suppress default tap highlight on all interactive elements */
 a, button, [role="button"] {
   -webkit-tap-highlight-color: transparent;
   tap-highlight-color: transparent;
@@ -63,7 +56,7 @@ a, button, [role="button"] {
 }
 
 /* =====================================================
-   CUSTOM CURSOR — desktop only
+   CUSTOM CURSOR
    ===================================================== */
 .cursor{
   width:8px;height:8px;
@@ -73,8 +66,6 @@ a, button, [role="button"] {
   pointer-events:none;
   z-index:9999;
   transition:transform 0.15s ease;
-  /* FIX: removed mix-blend-mode:difference — causes compositing layer issues
-     on Android WebView, producing a dark shadow/overlay artifact */
   will-change:transform,left,top;
 }
 .cursor-ring{
@@ -95,7 +86,6 @@ nav{
   position:fixed;top:0;left:0;right:0;
   z-index:100;
   padding:20px 60px;
-  /* FIX: honour safe-area on notched phones */
   padding-left: calc(60px + var(--safe-l));
   padding-right: calc(60px + var(--safe-r));
   display:flex;justify-content:space-between;align-items:center;
@@ -103,7 +93,6 @@ nav{
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
-  /* FIX: constrain on very wide screens */
   max-width:100%;
 }
 
@@ -131,7 +120,6 @@ nav{
 }
 .nav-links a:hover{color:var(--text)}
 
-/* FIX: hamburger menu for mobile — was completely absent */
 .nav-toggle{
   display:none;
   flex-direction:column;justify-content:center;align-items:center;
@@ -150,7 +138,6 @@ nav{
 .nav-toggle.open span:nth-child(2){opacity:0}
 .nav-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-/* mobile drawer */
 .nav-drawer{
   display:none;
   position:fixed;top:0;left:0;right:0;bottom:0;
@@ -177,7 +164,6 @@ nav{
 #hero{
   min-height:100vh;min-height:100dvh;
   display:flex;align-items:center;
-  /* FIX: top padding accounts for fixed nav ~60px + comfortable breathing room */
   padding:120px 60px 60px;
   padding-left: calc(60px + var(--safe-l));
   padding-right: calc(60px + var(--safe-r));
@@ -203,11 +189,9 @@ nav{
 .hero-inner{
   position:relative;z-index:2;
   display:grid;
-  /* FIX: 1fr auto → fr + clamp to prevent overflow on narrow screens */
   grid-template-columns:1fr auto;
   align-items:center;gap:80px;
   width:100%;
-  /* FIX: max-width + auto margin keeps it centered on ultra-wide */
   max-width:1100px;margin:0 auto;
 }
 
@@ -282,7 +266,6 @@ h1 .line2{color:var(--accent);display:block}
   border:1px solid var(--border);
   filter:grayscale(20%);
   transition:filter 0.3s;
-  /* FIX: explicit display block removes inline baseline gap */
   display:block;
 }
 .hero-photo:hover{filter:grayscale(0%)}
@@ -323,7 +306,6 @@ section{
   position:relative;
 }
 
-/* FIX: content wrapper to constrain max-width on ultra-wide */
 .section-inner{
   max-width:1100px;
   margin:0 auto;
@@ -355,7 +337,6 @@ h2{
 }
 .about-grid{
   display:grid;
-  /* FIX: was 1fr 1fr with 80px gap → too cramped at 900px; use 55/45 split */
   grid-template-columns:1fr 1fr;
   gap:64px;align-items:start;
 }
@@ -385,7 +366,6 @@ h2{
 #stack{background:var(--bg)}
 .stack-grid{
   display:grid;
-  /* FIX: minmax(120px,1fr) → use 110px min so it fits on 320px (2 cols = 240+gap ok) */
   grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
   gap:10px;
 }
@@ -413,12 +393,9 @@ h2{
   border-top:1px solid var(--border);
 }
 .projects-grid{
-  /* FIX: was auto-fill minmax(320px,1fr) → with 2 cards only, 
-     on wide screens it was making them too wide or 3-col gaps. 
-     Use max 2 columns explicitly */
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));
-  max-width:900px; /* caps at 2 columns cleanly */
+  max-width:900px;
   gap:20px;
 }
 .project-card{
@@ -443,7 +420,7 @@ h2{
   border:1px solid rgba(0,212,170,0.2);
   color:var(--accent2);
 }
-.project-badge.academic{
+.project-badge.homolog{
   background:rgba(233,69,96,0.1);
   border-color:rgba(233,69,96,0.2);
   color:var(--accent);
@@ -530,7 +507,6 @@ footer{
   padding:28px 60px;
   padding-left: calc(60px + var(--safe-l));
   padding-right: calc(60px + var(--safe-r));
-  /* FIX: bottom safe area for gesture bar */
   padding-bottom: calc(28px + var(--safe-b));
   border-top:1px solid var(--border);
   display:flex;justify-content:space-between;align-items:center;
@@ -551,7 +527,6 @@ footer{
 }
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* FIX: respect user's reduced-motion preference */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:0.01ms !important;
@@ -562,57 +537,38 @@ footer{
 }
 
 /* =====================================================
-   RESPONSIVE — TABLET 900–1200px
+   RESPONSIVE 
    ===================================================== */
 @media(max-width:1200px){
   .hero-inner{gap:48px}
   .about-grid{gap:48px}
 }
 
-/* =====================================================
-   RESPONSIVE — MOBILE ≤ 900px
-   ===================================================== */
 @media(max-width:900px){
-  /* NAV */
-  nav{padding:16px 24px}
   nav{
+    padding:16px 24px;
     padding-left: calc(24px + var(--safe-l));
     padding-right: calc(24px + var(--safe-r));
   }
-  .nav-links{display:none} /* replaced by drawer */
+  .nav-links{display:none}
   .nav-toggle{display:flex}
-
-  /* CURSOR — disable completely on touch */
   body{cursor:auto}
   .cursor,.cursor-ring{display:none}
 
-  /* HERO */
   #hero{
     padding:90px 24px 60px;
     padding-left: calc(24px + var(--safe-l));
     padding-right: calc(24px + var(--safe-r));
-    /* FIX: center content when photo stacks above */
     align-items:flex-start;
   }
-  .hero-inner{
-    grid-template-columns:1fr; /* single column */
-    gap:32px;
-    /* FIX: photo row goes on top */
-  }
-  .hero-photo-wrap{
-    order:-1; /* photo above text on mobile */
-    display:flex;justify-content:center;
-  }
+  .hero-inner{grid-template-columns:1fr;gap:32px;}
+  .hero-photo-wrap{order:-1;display:flex;justify-content:center;}
   .hero-photo{width:140px;height:175px}
-  h1{
-    font-size:clamp(36px,10vw,56px);
-    letter-spacing:-2px;
-  }
+  h1{font-size:clamp(36px,10vw,56px);letter-spacing:-2px;}
   .hero-desc{font-size:14px;margin-bottom:32px}
   .hero-ctas{gap:12px}
   .btn-primary,.btn-ghost{
     padding:12px 20px;font-size:12px;
-    /* FIX: prevent buttons from overflowing on 320px */
     flex:1 1 auto;justify-content:center;min-width:0;
   }
   .hero-scroll{
@@ -620,56 +576,27 @@ footer{
     bottom:24px;
   }
 
-  /* SECTIONS */
   section{
     padding:64px 24px 56px;
     padding-left: calc(24px + var(--safe-l));
     padding-right: calc(24px + var(--safe-r));
   }
-  h2{
-    letter-spacing:-1px; /* FIX: -2px clips on narrow screens */
-    margin-bottom:40px;
-  }
+  h2{letter-spacing:-1px;margin-bottom:40px;}
 
-  /* ABOUT */
-  .about-grid{
-    grid-template-columns:1fr; /* stack */
-    gap:40px;
-  }
-  .about-stats{
-    grid-template-columns:1fr 1fr;
-    /* FIX: on very small screens (< 360px) fall back to 1 col */
-  }
-  @media(max-width:359px){
-    .about-stats{grid-template-columns:1fr}
-  }
-
-  /* STACK */
-  .stack-grid{
-    /* FIX: 2 cols on 320px-540px, 3+ on larger */
-    grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-  }
-
-  /* PROJECTS */
-  .projects-grid{
-    grid-template-columns:1fr;
-    max-width:100%;
-  }
-
-  /* TIMELINE */
+  .about-grid{grid-template-columns:1fr;gap:40px;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+  
+  .stack-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
+  .projects-grid{grid-template-columns:1fr;max-width:100%;}
   .timeline{padding-left:28px}
   .timeline-item::before{left:-32px}
 
-  /* CONTACT */
-  .contact-links{
-    flex-direction:column;align-items:center;
-  }
+  .contact-links{flex-direction:column;align-items:center;}
   .contact-links .btn-primary,
   .contact-links .btn-ghost{
     width:100%;max-width:280px;justify-content:center;
   }
 
-  /* FOOTER */
   footer{
     flex-direction:column;gap:8px;
     text-align:center;
@@ -678,24 +605,22 @@ footer{
   }
 }
 
-/* =====================================================
-   RESPONSIVE — SMALL MOBILE ≤ 480px
-   ===================================================== */
 @media(max-width:480px){
   .hero-photo{width:120px;height:150px}
   .stat-num{font-size:30px}
   .stat-card{padding:20px 16px}
   .timeline-title{font-size:16px}
 }
+@media(max-width:359px){
+  .about-stats{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<!-- FIX: custom cursor elements — hidden on mobile via CSS -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- FIX: mobile drawer nav -->
 <div class="nav-drawer" id="navDrawer">
   <a href="#about"    onclick="closeDrawer()">Sobre</a>
   <a href="#stack"    onclick="closeDrawer()">Stack</a>
@@ -713,7 +638,6 @@ footer{
     <li><a href="#journey">Jornada</a></li>
     <li><a href="#contact">Contato</a></li>
   </ul>
-  <!-- FIX: hamburger toggle for mobile -->
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -725,9 +649,9 @@ footer{
   <div class="hero-glow"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-tag">Disponível para oportunidades</div>
+      <div class="hero-tag">SaaS, Automação & Indústria</div>
       <h1>Vitor<br><span class="line2">Henriques</span></h1>
-      <p class="hero-desc">Python Developer · Construo sistemas reais que resolvem problemas reais. MicroSaaS em produção, CS50x Harvard e uma forte compreensão de como a tecnologia deve servir aos objetivos do negócio.</p>
+      <p class="hero-desc">Desenvolvedor de Software construindo a sua carreira na interseção entre software, dados, processos e indústria. Foco em entender problemas reais, estruturar soluções robustas e acompanhar a aplicação no mundo real.</p>
       <div class="hero-ctas">
         <a href="#projects" class="btn-primary">Ver projetos →</a>
         <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
@@ -736,9 +660,8 @@ footer{
     </div>
     <div class="hero-photo-wrap">
       <div class="hero-photo-frame">
-        <!-- FIX: loading="lazy" and explicit dimensions to avoid CLS -->
         <img class="hero-photo" width="240" height="300" loading="lazy"
-             src="data:image/jpeg;base64,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" 
+             src="data:image/jpeg;base64,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" 
              alt="Vitor Henriques"/>
       </div>
     </div>
@@ -753,15 +676,15 @@ footer{
     <div class="about-grid">
       <div class="about-text reveal">
         <h2>Dev com visão de negócio<br>e operacional.</h2>
-        <p>Minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Em Agosto de 2020 na Belmonte Distribuidora, atuei na ponta técnica gerenciando infraestrutura, backups e servidores, garantindo que a operação nunca parasse.</p>
-        <p>Fui o elo entre a dor do usuário e os times de dev da <strong>Target Sistemas e Sisbev</strong>. Aprendi que um bug ou uma rede instável não é apenas um erro técnico, mas um caminhão parado ou uma venda perdida. Essa experiência me ensinou o que cursos não ensinam: <strong>como a tecnologia serve ao lucro do negócio</strong>.</p>
-        <p>Sou formado em <strong>ADS pela Uninter (2021)</strong> e certificado pelo <strong>CS50x Harvard</strong>. Hoje, aplico essa bagagem de "campo" e fundamento acadêmico no meu MicroSaaS <strong>CM Manager Pro</strong>, construindo sistemas focados em resiliência, segurança e usabilidade real.</p>
+        <p>A minha entrada na tecnologia não começou com um bootcamp — começou na <strong>prática</strong>. Atuei anos na ponta técnica gerenciando infraestrutura, backups e servidores, sendo o elo estratégico entre a operação e os times de desenvolvimento dos ERPs Target Sistemas e Sisbev.</p>
+        <p>Aprendi que um bug não é apenas um erro de código, mas um processo de negócio parado. Desenvolvo as minhas soluções unindo o pragmatismo da indústria com as melhores práticas de engenharia de software e arquitetura de sistemas corporativos.</p>
+        <p>Hoje expando a minha stack para <strong>C#, .NET, Docker e SQL Server</strong>, desenhando integrações sólidas, bases de dados relativas e sistemas de análise (com Python e Pandas). O foco é único: entender o problema e construir sistemas robustos que resolvem desafios reais de ponta a ponta.</p>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Projetos em produção</div></div>
-        <div class="stat-card"><div class="stat-num">ADS</div><div class="stat-label">Uninter · 2021</div></div>
+        <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Projetos entregues/homologação</div></div>
+        <div class="stat-card"><div class="stat-num">C#/.NET</div><div class="stat-label">Ecossistema Corporativo</div></div>
         <div class="stat-card"><div class="stat-num">CS50x</div><div class="stat-label">Harvard University</div></div>
-        <div class="stat-card"><div class="stat-num">RJ</div><div class="stat-label">Volta Redonda · Brasil</div></div>
+        <div class="stat-card"><div class="stat-num">Docker</div><div class="stat-label">Infra e Deploy</div></div>
       </div>
     </div>
   </div>
@@ -778,40 +701,32 @@ footer{
         <div class="stack-name">Python</div>
       </div>
       <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#092E20"/><text x="2" y="21" font-size="11" fill="white" font-family="sans-serif" font-weight="bold">Django</text></svg></div>
+        <div class="stack-name">Django</div>
+      </div>
+      <div class="stack-item">
         <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#000"/><text x="5" y="22" font-size="13" fill="white" font-family="serif" font-weight="bold">Flask</text></svg></div>
         <div class="stack-name">Flask</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#150458"/><text x="2" y="21" font-size="10" fill="white" font-family="sans-serif" font-weight="bold">Pandas</text></svg></div>
+        <div class="stack-name">Pandas</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#239120"/><text x="7" y="22" font-size="16" fill="white" font-family="sans-serif" font-weight="bold">C#</text></svg></div>
+        <div class="stack-name">C# / .NET</div>
       </div>
       <div class="stack-item">
         <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="16" rx="14" ry="10" stroke="#336791" stroke-width="2"/><ellipse cx="16" cy="10" rx="14" ry="4" fill="#336791"/></svg></div>
         <div class="stack-name">PostgreSQL</div>
       </div>
       <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4l10 6v12l-10 6L6 22V10L16 4z" fill="#D71F00"/><path d="M16 4v24M6 10l10 6 10-6" stroke="white" stroke-width="1.5"/></svg></div>
-        <div class="stack-name">SQLAlchemy</div>
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="16" rx="14" ry="10" stroke="#CC2927" stroke-width="2"/><ellipse cx="16" cy="10" rx="14" ry="4" fill="#CC2927"/></svg></div>
+        <div class="stack-name">SQL Server</div>
       </div>
       <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="5" width="28" height="22" rx="2" fill="#E34F26"/><path d="M8 9h16l-2 14-6 2-6-2L8 9z" fill="#F06529"/><path d="M16 21l4-1.5 1.5-9H16v4h3.5l-.5 3L16 19v2z" fill="white"/><path d="M16 19v2l-4-1.5-.5-3H15l.5 3L16 19z" fill="#ebebeb"/></svg></div>
-        <div class="stack-name">HTML5</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="5" width="28" height="22" rx="2" fill="#1572B6"/><path d="M8 9h16l-2 14-6 2-6-2L8 9z" fill="#33A9DC"/><path d="M16 21l4-1.5 1.5-9H16v4h3.5l-.5 3L16 19v2z" fill="white"/><path d="M16 19v2l-4-1.5-.5-3H15l.5 3L16 19z" fill="#ebebeb"/></svg></div>
-        <div class="stack-name">CSS3</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#563D7C"/><path d="M8 12h16v2H8zM8 15h16v2H8zM8 18h10v2H8z" fill="white"/></svg></div>
-        <div class="stack-name">Bootstrap</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M4 8l4-4 4 4-4 4-4-4zM4 8v16l12 4 12-4V8L16 4 4 8z" stroke="#F05032" stroke-width="1.5" fill="none"/><path d="M4 8l12 4 12-4M16 12v12" stroke="#F05032" stroke-width="1.5"/></svg></div>
-        <div class="stack-name">Git</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2C8.27 2 2 8.27 2 16c0 6.19 4.01 11.43 9.57 13.29.7.13.96-.3.96-.67v-2.34c-3.89.85-4.71-1.87-4.71-1.87-.64-1.62-1.56-2.05-1.56-2.05-1.27-.87.1-.85.1-.85 1.41.1 2.15 1.45 2.15 1.45 1.25 2.14 3.28 1.52 4.08 1.16.13-.9.49-1.52.89-1.87-3.11-.35-6.37-1.55-6.37-6.92 0-1.53.55-2.78 1.44-3.75-.14-.36-.62-1.78.14-3.7 0 0 1.17-.38 3.85 1.43A13.4 13.4 0 0116 8.9c1.19.01 2.38.16 3.5.47 2.67-1.81 3.84-1.43 3.84-1.43.76 1.92.28 3.34.14 3.7.9.97 1.44 2.22 1.44 3.75 0 5.38-3.27 6.57-6.39 6.91.5.43.95 1.29.95 2.6v3.85c0 .37.25.81.96.67C25.99 27.43 30 22.19 30 16c0-7.73-6.27-14-14-14z" fill="#e8edf5"/></svg></div>
-        <div class="stack-name">GitHub</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#46E3B7"/><path d="M8 16h16M16 8v16" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-        <div class="stack-name">Render</div>
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="4" fill="#2496ED"/><text x="2" y="20" font-size="9" fill="white" font-family="sans-serif" font-weight="bold">Docker</text></svg></div>
+        <div class="stack-name">Docker</div>
       </div>
     </div>
   </div>
@@ -820,40 +735,75 @@ footer{
 <!-- ===================== PROJECTS ===================== -->
 <section id="projects">
   <div class="section-inner">
-    <div class="section-label reveal">Projetos</div>
-    <h2 class="reveal">O que já<br>construí.</h2>
-    <div class="projects-grid">
-      <div class="project-card featured reveal">
+    <div class="section-label reveal">Portfólio</div>
+    <h2 class="reveal">Projetos em Destaque.</h2>
+    <div class="projects-grid reveal">
+      
+      <!-- Projeto 1 -->
+      <div class="project-card featured">
         <div class="project-header">
-          <span class="project-badge">Em produção</span>
-          <div class="project-links">
-            <a href="https://cm-manager-pro-3ioe.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link">Live ↗</a>
-            <a href="https://github.com/Vitorenriks/cm-manager-pro" target="_blank" rel="noopener noreferrer" class="project-link">GitHub ↗</a>
-          </div>
+          <span class="project-badge homolog">Em Homologação</span>
         </div>
         <div class="project-body">
-          <div class="project-title">CM Manager Pro</div>
-          <p class="project-desc">MicroSaaS de gestão de obras para construtoras. Sistema completo com dashboard, CRUD de projetos, autenticação segura e UX mobile-first.</p>
+          <h3 class="project-title">SaaS de Gestão de Projetos</h3>
+          <p class="project-desc">Solução corporativa completa com forte estruturação em arquitetura, gestão de bancos de dados, controlo de acessos rigoroso e infraestrutura resiliente.</p>
           <div class="project-tags">
-            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">Flask-Login</span><span class="tag">PBKDF2</span><span class="tag">Bootstrap 5</span><span class="tag">Render</span>
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Docker</span>
           </div>
         </div>
       </div>
-      <div class="project-card reveal">
+
+      <!-- Projeto 2 -->
+      <div class="project-card">
         <div class="project-header">
-          <span class="project-badge academic">CS50x · Harvard</span>
-          <div class="project-links">
-            <a href="https://github.com/Vitorenriks/construction-management" target="_blank" rel="noopener noreferrer" class="project-link">GitHub ↗</a>
-          </div>
+          <span class="project-badge homolog">Em Homologação</span>
         </div>
         <div class="project-body">
-          <div class="project-title">Construction Management</div>
-          <p class="project-desc">Projeto de conclusão do CS50x Harvard. Sistema de gestão de obras construído com Python, Flask e SQLite.</p>
+          <h3 class="project-title">MediusGest</h3>
+          <p class="project-desc">Sistema interno de medição para faturamento. Transforma fluxos operacionais e atividades manuais num ecossistema digital estruturado e rastreável.</p>
           <div class="project-tags">
-            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Jinja2</span><span class="tag">HTML/CSS</span>
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Electron</span>
           </div>
         </div>
       </div>
+
+      <!-- Projeto 3 -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-badge">Sistema Interno</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Sync Corporativo</h3>
+          <p class="project-desc">Aplicação de sincronização de informações em tempo real ligada a um painel com controlo de acessos próprio e camada de rede segura.</p>
+          <div class="project-tags">
+            <span class="tag">C# / .NET</span>
+            <span class="tag">Cloudflare</span>
+            <span class="tag">Tailscale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 4 -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-badge">Produção</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">CM Manager</h3>
+          <p class="project-desc">O meu primeiro projeto em produção. Aplicação web voltada à operação diária, com autenticação, perfis de utilizador e operações CRUD de ponta a ponta.</p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">SQLite/PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -862,131 +812,113 @@ footer{
 <section id="journey">
   <div class="section-inner">
     <div class="section-label reveal">Jornada</div>
-    <h2 class="reveal">Como cheguei<br>até aqui.</h2>
-    <div class="timeline">
+    <h2 class="reveal">Trajetória e<br>Experiência.</h2>
+    <div class="timeline reveal">
+      
       <div class="timeline-item">
-        <div class="timeline-year">2026 · Presente</div>
-        <div class="timeline-title">CM Manager Pro — Upgrades & Performance</div>
-        <div class="timeline-sub">MicroSaaS em Produção</div>
-        <div class="timeline-desc">Evoluindo a stack para Full Stack com Angular e TypeScript, enquanto otimizo a infraestrutura PostgreSQL do CM Manager Pro.</div>
+        <div class="timeline-year">Presente</div>
+        <h3 class="timeline-title">Software Developer</h3>
+        <div class="timeline-sub">SaaS, Automação & Indústria</div>
+        <p class="timeline-desc">Evolução de soluções técnicas diretas para sistemas corporativos completos (SaaS, MediusGest). Foco constante em C#, .NET, Docker e arquitetura de banco de dados no ecossistema SQL Server e PostgreSQL.</p>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">2025</div>
-        <div class="timeline-title">Construction Management & CS50x</div>
-        <div class="timeline-sub">Harvard University / MicroSaaS</div>
-        <div class="timeline-desc">Conclusão do CS50x Harvard e evolução do projeto acadêmico para o primeiro MVP do MicroSaaS.</div>
+        <div class="timeline-year">2023 - 2024</div>
+        <h3 class="timeline-title">Primeiros Projetos em Produção</h3>
+        <div class="timeline-sub">CM Manager & Stock Control</div>
+        <p class="timeline-desc">Lançamento do CM Manager no ambiente corporativo e desenvolvimento do MVP Stock Control focado em resiliência offline-first com PWA e bancos locais.</p>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">2021</div>
-        <div class="timeline-title">Análise e Desenvolvimento de Sistemas</div>
-        <div class="timeline-sub">Graduação concluída — Uninter</div>
-        <div class="timeline-desc">Formação focada em fundamentos de sistemas, engenharia de software e desenvolvimento web.</div>
+        <div class="timeline-year">2020 - 2021</div>
+        <h3 class="timeline-title">Tecnologia no "Chão de Fábrica"</h3>
+        <div class="timeline-sub">Belmonte Distribuidora & Graduação</div>
+        <p class="timeline-desc">Administração de redes, servidores e rotinas críticas (ERPs Target Sistemas/Sisbev). Conclusão do curso de Análise e Desenvolvimento de Sistemas pela Uninter.</p>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2020 – 2025</div>
-        <div class="timeline-title">Infraestrutura e Interface de Sistemas</div>
-        <div class="timeline-sub">Belmonte Distribuidora</div>
-        <div class="timeline-desc">Gestão de infraestrutura, backups e interface estratégica com times de dev da Target/Sisbev.</div>
-      </div>
+
     </div>
   </div>
 </section>
 
 <!-- ===================== CONTACT ===================== -->
 <section id="contact">
-  <div class="section-inner">
-    <div class="section-label reveal" style="justify-content:center">Contato</div>
-    <h2 class="reveal">Vamos<br>conversar.</h2>
-    <p class="contact-sub reveal">Aberto a oportunidades como <span style="display:inline-block;white-space:nowrap">Desenvolvedor Python Júnior</span>. Entre em contato direto.</p>
-    <div class="contact-links reveal">
-      <a href="mailto:vitor.cunha.henrique@hotmail.com" class="btn-primary">E-mail ↗</a>
-      <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
-      <a href="https://github.com/Vitorenriks" target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub ↗</a>
+  <div class="section-inner reveal">
+    <div class="section-label" style="justify-content:center">Contato</div>
+    <h2>Vamos conversar?</h2>
+    <p class="contact-sub">Seja para falar de automação de processos, desenvolvimento SaaS ou arquitetura de sistemas industriais, estou disponível.</p>
+    <div class="contact-links">
+      <a href="mailto:vitor.cunha.henrique@hotmail.com" class="btn-primary">Enviar Email</a>
+      <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn</a>
     </div>
   </div>
 </section>
 
+<!-- ===================== FOOTER ===================== -->
 <footer>
-  <span>© 2026 Vitor Henriques</span>
-  <span>Python Developer · Volta Redonda, RJ</span>
+  <div>&copy; 2024 Vitor Henriques. Todos os direitos reservados.</div>
+  <div>Desenhado e desenvolvido para performance.</div>
 </footer>
 
+<!-- ===================== SCRIPTS ===================== -->
 <script>
-// ── CUSTOM CURSOR (desktop only) ────────────────────────────────────────────
-// FIX: only activate cursor tracking on non-touch devices
-const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursorRing');
-
-if (!isTouchDevice()) {
-  let mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx-4 + 'px';
-    cursor.style.top  = my-4 + 'px';
-  });
-  (function animRing() {
-    rx += (mx-rx)*0.12;
-    ry += (my-ry)*0.12;
-    ring.style.left = rx-16 + 'px';
-    ring.style.top  = ry-16 + 'px';
-    requestAnimationFrame(animRing);
-  })();
-  document.querySelectorAll('a,button,.stack-item,.project-card').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.style.transform='scale(3)');
-    el.addEventListener('mouseleave', () => cursor.style.transform='scale(1)');
-  });
-}
-
-// ── HAMBURGER MENU ──────────────────────────────────────────────────────────
-const navToggle = document.getElementById('navToggle');
-const navDrawer = document.getElementById('navDrawer');
-
-function openDrawer() {
-  navDrawer.style.display = 'flex';
-  requestAnimationFrame(() => navDrawer.classList.add('open'));
-  navToggle.classList.add('open');
-  navToggle.setAttribute('aria-expanded', 'true');
-  document.body.style.overflow = 'hidden';
-}
-function closeDrawer() {
-  navDrawer.classList.remove('open');
-  navToggle.classList.remove('open');
-  navToggle.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
-  setTimeout(() => { navDrawer.style.display = 'none'; }, 300);
-}
-
-navToggle.addEventListener('click', () => {
-  navToggle.classList.contains('open') ? closeDrawer() : openDrawer();
-});
-
-// close drawer on ESC
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeDrawer();
-});
-
-// ── SCROLL REVEAL ───────────────────────────────────────────────────────────
-const obs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 80);
+  // Cursor Personalizado
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+  
+  if (window.matchMedia("(pointer: fine)").matches) {
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate3d(${mouseX - 4}px, ${mouseY - 4}px, 0)`;
+    });
+    
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.2;
+      ringY += (mouseY - ringY) * 0.2;
+      cursorRing.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0)`;
+      requestAnimationFrame(animateRing);
     }
-  });
-}, { threshold: 0.1 });
+    requestAnimationFrame(animateRing);
+  }
 
-document.querySelectorAll('.reveal,.timeline-item').forEach(el => obs.observe(el));
-
-// ── NAV ACTIVE LINK ─────────────────────────────────────────────────────────
-const secs  = document.querySelectorAll('section[id]');
-const links = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let cur = '';
-  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
-  links.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--text)' : '';
+  // Menu Mobile Toggle
+  const navToggle = document.getElementById('navToggle');
+  const navDrawer = document.getElementById('navDrawer');
+  
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navDrawer.classList.toggle('open');
+    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', !isExpanded);
   });
-}, { passive: true }); // FIX: passive scroll listener for better mobile perf
+
+  function closeDrawer() {
+    navToggle.classList.remove('open');
+    navDrawer.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  // Scroll Reveal Animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal, .timeline-item').forEach(el => {
+    observer.observe(el);
+  });
 </script>
 </body>
 </html>
