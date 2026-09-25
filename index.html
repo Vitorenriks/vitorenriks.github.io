@@ -159,7 +159,7 @@ nav{
 .nav-drawer a:hover{color:var(--text)}
 
 /* =====================================================
-   HERO - LARGURA EXPANDIDA
+   HERO - SEM FOTO
    ===================================================== */
 #hero{
   min-height:100vh;min-height:100dvh;
@@ -188,16 +188,14 @@ nav{
 
 .hero-inner{
   position:relative;z-index:2;
-  display:grid;
-  grid-template-columns:1fr auto;
+  display:flex;
   align-items:center;
-  gap:120px; /* Aumentado para afastar a foto do texto */
   width:100%;
-  max-width:1400px; /* Layout mais largo */
+  max-width:1400px;
   margin:0 auto;
 }
 
-.hero-content{max-width:800px} /* Área de texto mais larga */
+.hero-content{max-width:850px}
 
 .hero-tag{
   display:inline-flex;align-items:center;gap:8px;
@@ -218,7 +216,7 @@ nav{
 
 h1{
   font-family:'Syne',sans-serif;
-  font-size:clamp(50px,7vw,100px); /* Texto maior */
+  font-size:clamp(50px,8vw,110px);
   font-weight:800;line-height:1.0;letter-spacing:-4px;
   margin-bottom:32px;
   opacity:0;animation:fadeUp 0.6s ease 0.4s forwards;
@@ -226,9 +224,9 @@ h1{
 h1 .line2{color:var(--accent);display:block}
 
 .hero-desc{
-  font-size:17px; /* Texto descritivo um pouco maior */
+  font-size:18px;
   color:var(--muted);
-  max-width:650px; /* Descrição mais larga */
+  max-width:680px;
   margin-bottom:56px;line-height:1.9;
   opacity:0;animation:fadeUp 0.6s ease 0.6s forwards;
 }
@@ -259,36 +257,12 @@ h1 .line2{color:var(--accent);display:block}
 }
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
 
-.hero-photo-wrap{
-  opacity:0;animation:fadeUp 0.6s ease 1s forwards;
-  flex-shrink:0;
-}
-.hero-photo{
-  width:320px; /* Foto mais larga */
-  height:420px; /* Foto mais alta */
-  object-fit:cover;object-position:center top;
-  border-radius:12px;
-  border:1px solid var(--border);
-  filter:grayscale(20%);
-  transition:filter 0.3s;
-  display:block;
-}
-.hero-photo:hover{filter:grayscale(0%)}
-.hero-photo-frame{
-  position:relative;display:inline-block;
-}
-.hero-photo-frame::before{
-  content:'';position:absolute;inset:-4px;border-radius:16px;
-  background:linear-gradient(135deg,var(--accent),transparent,var(--accent2));
-  z-index:-1;opacity:.5;
-}
-
 .hero-scroll{
   position:absolute;bottom:40px;left:80px;
   left: calc(80px + var(--safe-l));
   display:flex;align-items:center;gap:12px;
   color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;
-  opacity:0;animation:fadeUp 0.6s ease 1.2s forwards;
+  opacity:0;animation:fadeUp 0.6s ease 1s forwards;
 }
 .scroll-line{
   width:50px;height:1px;background:var(--muted);
@@ -302,7 +276,7 @@ h1 .line2{color:var(--accent);display:block}
 @keyframes scrollLine{to{left:200%}}
 
 /* =====================================================
-   SECTIONS — shared (Largura Expandida)
+   SECTIONS — shared
    ===================================================== */
 section{
   padding:120px 80px;
@@ -312,7 +286,7 @@ section{
 }
 
 .section-inner{
-  max-width:1400px; /* Layout mais largo */
+  max-width:1400px;
   margin:0 auto;
 }
 
@@ -343,7 +317,7 @@ h2{
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:100px;align-items:start; /* Mais espaço entre texto e stats */
+  gap:100px;align-items:start;
 }
 .about-text p{color:var(--muted);margin-bottom:24px;font-size:16px;line-height:1.9}
 .about-text p strong{color:var(--text)}
@@ -355,7 +329,7 @@ h2{
 }
 .stat-card{
   background:var(--bg3);border:1px solid var(--border);
-  padding:40px 32px; /* Cards maiores */
+  padding:40px 32px;
   transition:border-color 0.2s;
 }
 .stat-card:hover{border-color:rgba(233,69,96,0.3)}
@@ -399,7 +373,7 @@ h2{
 }
 .projects-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(min(400px,100%),1fr)); /* Cards mais largos */
+  grid-template-columns:repeat(auto-fill,minmax(min(400px,100%),1fr));
   gap:32px;
 }
 .project-card{
@@ -536,9 +510,7 @@ footer{
    RESPONSIVE 
    ===================================================== */
 @media(max-width:1200px){
-  .hero-inner{gap:64px}
   .about-grid{gap:64px}
-  .hero-photo{width:280px; height:380px;}
 }
 
 @media(max-width:900px){
@@ -558,9 +530,7 @@ footer{
     padding-right: calc(24px + var(--safe-r));
     align-items:flex-start;
   }
-  .hero-inner{grid-template-columns:1fr;gap:48px;}
-  .hero-photo-wrap{order:-1;display:flex;justify-content:center;}
-  .hero-photo{width:200px;height:260px}
+  
   h1{font-size:clamp(40px,10vw,64px);letter-spacing:-2px;}
   .hero-desc{font-size:15px;margin-bottom:40px}
   
@@ -632,16 +602,6 @@ footer{
         <a href="#projects" class="btn-primary">Ver projetos →</a>
         <a href="https://linkedin.com/in/vitor-henriques-86a37b2a4" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
         <a href="mailto:vitor.cunha.henrique@hotmail.com" class="btn-ghost">Contato ↗</a>
-      </div>
-    </div>
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-frame">
-        <!-- 
-          TROQUE O LINK NO 'src' ABAIXO PARA A SUA FOTO.
-          Se a sua foto se chama "minha-foto.jpg" e está na mesma pasta que este arquivo HTML,
-          apague o link de teste e escreva src="minha-foto.jpg" 
-        -->
-        <img class="hero-photo" width="320" height="420" loading="lazy" src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?q=80&w=600&auto=format&fit=crop" alt="Vitor Henriques"/>
       </div>
     </div>
   </div>
@@ -764,6 +724,21 @@ footer{
             <span class="tag">C# / .NET</span>
             <span class="tag">Cloudflare</span>
             <span class="tag">Tailscale</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-badge">MVP / Produção</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Stock Control</h3>
+          <p class="project-desc">Aplicação desenvolvida com foco em resiliência offline-first, garantindo a continuidade operacional do negócio mesmo sem conectividade de rede, utilizando PWA e armazenamento local.</p>
+          <div class="project-tags">
+            <span class="tag">Offline-First</span>
+            <span class="tag">PWA</span>
+            <span class="tag">Bancos Locais</span>
           </div>
         </div>
       </div>
